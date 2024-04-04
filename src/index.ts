@@ -20,8 +20,12 @@ cloudinary.config({
 });
 
 const app = express();
-app.use(express.json()); // middleware: automatically convert body of any request to API server to json
 app.use(cors());
+
+// validation and security reasons
+app.use("/api/order/checkout/webhook", express.raw({ type: "*/*" }));
+
+app.use(express.json()); // middleware: automatically convert body of any request to API server to json
 
 app.get("/health", async (req: Request, res: Response) => {
   res.send({ message: "health OK!" });
